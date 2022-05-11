@@ -5,6 +5,8 @@ import net.problemzone.bashit.modules.itemManager.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
+
 public class GameManager {
 
     private final static int MAX_PLAYERS = 2;
@@ -31,11 +33,11 @@ public class GameManager {
         if (gameState == GameState.WAITING) {
             gameState = GameState.RUNNING;
             Bukkit.broadcastMessage("Timer gestartet!");
-            for(int i = 0; i<2; i++){
-                itemManager.generateChest(Bukkit.getWorld("BashIt"));
+            for(int i = 0; i<10; i++){
+                itemManager.generateChest(Objects.requireNonNull(Bukkit.getWorld("BashIt")));
             }
             for(int i = 0; i<5; i++){
-                itemManager.generateEmeraldBlock(Bukkit.getWorld("BashIt"));
+                itemManager.generateEmeraldBlock(Objects.requireNonNull(Bukkit.getWorld("BashIt")));
             }
 
             new BukkitRunnable() {

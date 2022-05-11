@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class RocketLauncher {
@@ -25,14 +26,15 @@ public class RocketLauncher {
     public static void generateRocketlauncher(){
         ItemStack item = new ItemStack(Material.IRON_HOE);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Rocketlauncher");
+        Objects.requireNonNull(meta).setDisplayName(ChatColor.RED + "Rocketlauncher");
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Boom, Boom, Boom, Boom");
         lore.add(ChatColor.GRAY + "I want you in my Room!");
         lore.add("");
-        lore.add(ChatColor.GRAY+ "Damage: " + ChatColor.RED + "16");
+        lore.add(ChatColor.GRAY+ "Damage: " + ChatColor.RED + "12");
         lore.add(ChatColor.GRAY + "Item Ability:");
-        lore.add(ChatColor.AQUA + "=> Right-Click to spend a night together");
+        lore.add("");
+        lore.add(ChatColor.AQUA + "=>  Right-Click to spend a night together");
         lore.add("");
         lore.add(ChatColor.AQUA + "Only one Usage!");
         meta.setLore(lore);
