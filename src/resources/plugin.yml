@@ -1,0 +1,6 @@
+name: BashIt
+version: '${project.version}'
+main: net.problemzone.bashit.Main
+api-version: 1.13
+authors: [ notQlex ]
+description: GunGame meets CoD
