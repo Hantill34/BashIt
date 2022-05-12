@@ -2,6 +2,7 @@ package net.problemzone.bashit.listener;
 
 
 import net.problemzone.bashit.modules.itemManager.ItemManager;
+import net.problemzone.bashit.modules.itemManager.items.MG;
 import net.problemzone.bashit.modules.itemManager.items.RocketLauncher;
 import net.problemzone.bashit.util.Sounds;
 import org.bukkit.*;
@@ -38,13 +39,14 @@ public class ItemListener implements Listener {
         //TODO: give player item
         int chance = random.nextInt(3);
         if (chance == 0) {
-            player.getInventory().addItem(new ItemStack(RocketLauncher.Rocketlauncher));
+            player.getInventory().addItem(MG.createMG());
+            player.getInventory().addItem(new ItemStack(Material.ARROW));
         }
         if (chance == 1) {
-            player.getInventory().addItem(new ItemStack(RocketLauncher.Rocketlauncher));
+            player.getInventory().addItem(RocketLauncher.createRocketlauncher());
         }
         if (chance == 2) {
-            player.getInventory().addItem(new ItemStack(RocketLauncher.Rocketlauncher));
+            player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
         }
 
 
@@ -60,7 +62,7 @@ public class ItemListener implements Listener {
         if (Objects.requireNonNull(event.getClickedBlock()).getType() != Material.EMERALD_BLOCK) return;
         event.getClickedBlock().setType(Material.AIR);
 
-        //give player a random effect
+        //TODO: give player a random effect
         int chance = random.nextInt(5);
         if (chance == 0) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 60, 2));

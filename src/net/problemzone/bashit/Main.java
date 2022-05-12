@@ -6,7 +6,6 @@ import net.problemzone.bashit.modules.GameListener;
 import net.problemzone.bashit.modules.GameManager;
 import net.problemzone.bashit.listener.ItemListener;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
-import net.problemzone.bashit.modules.itemManager.items.RocketLauncher;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -32,7 +31,6 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         getLogger().info("Loading BashIt Plugin.");
         initiatePlugin();
-        RocketLauncher.init();
 
         getLogger().info("Load BashIt Worlds.");
         loadWorlds();

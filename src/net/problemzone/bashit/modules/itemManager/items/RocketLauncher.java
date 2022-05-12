@@ -16,14 +16,7 @@ import java.util.UUID;
 
 public class RocketLauncher {
 
-    public static ItemStack Rocketlauncher;
-
-
-    public static void init(){
-        generateRocketlauncher();
-    }
-
-    public static void generateRocketlauncher(){
+    public static ItemStack createRocketlauncher(){
         ItemStack item = new ItemStack(Material.IRON_HOE);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(ChatColor.RED + "Rocketlauncher");
@@ -44,8 +37,7 @@ public class RocketLauncher {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         item.setItemMeta(meta);
-        Rocketlauncher = item;
-
+        return item;
     }
 
 }

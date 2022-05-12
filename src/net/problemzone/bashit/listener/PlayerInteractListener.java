@@ -1,6 +1,7 @@
 package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.Main;
+import net.problemzone.bashit.modules.itemManager.items.MG;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,7 +25,7 @@ public class PlayerInteractListener implements Listener {
 
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteractRLauncher(PlayerInteractEvent event) {
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)){
 
             if(event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.CHEST) return;
@@ -75,5 +77,35 @@ public class PlayerInteractListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onPlayerInteractMG(PlayerInteractEvent event){
+        if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)){
+            if(Objects.requireNonNull(event.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getDisplayName().equals(ChatColor.GOLD + "Wumme")){
+
+                new BukkitRunnable(){
+
+                    int timer = 25;
+
+                    @Override
+                    public void run(){
+                        if(event.getPlayer().getInventory().containsAtLeast(new ItemStack(Material.ARROW), 1)){
+                            Location eye = event.getPlayer().getEyeLocation();
+                            Location loc = eye.add(eye.getDirection().multiply(1.2));
+                            Arrow arrow = (Arrow) Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.ARROW);
+                            arrow.setVelocity(loc.getDirection().normalize().multiply(2));
+                            arrow.setShooter(event.getPlayer());
+
+                        }
+                        timer --;
+                        if(timer == 0){
+                            event.getPlayer().getInventory().removeItem(MG.createMG());
+                            event.getPlayer().getInventory().removeItem(new ItemStack(Material.ARROW));
+                            cancel();
+                        }
+                    }
+                }.runTaskTimer(plugin, 0L, 4L);
+            }
+        }
+    }
 }
 
