@@ -1,5 +1,6 @@
 package net.problemzone.bashit.listener;
 
+import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -11,6 +12,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerPickupArrowEvent;
 
 public class WorldProtectionListener implements Listener {
 
@@ -66,6 +68,13 @@ public class WorldProtectionListener implements Listener {
     //Cancel Crop Growth
     public void onCropGrowth(BlockGrowEvent e) {
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onArrowCollect(PlayerPickupArrowEvent event){
+        event.setCancelled(true);
+        Arrow arrow = (Arrow) event.getArrow();
+        arrow.remove();
     }
 
 }

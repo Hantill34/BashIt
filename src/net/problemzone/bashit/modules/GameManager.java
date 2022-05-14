@@ -13,7 +13,7 @@ public class GameManager {
 
     private final static int START_TIME = 20;
 
-    private GameState gameState = GameState.WAITING;
+    private static GameState gameState = GameState.WAITING;
 
     private final ItemManager itemManager;
 

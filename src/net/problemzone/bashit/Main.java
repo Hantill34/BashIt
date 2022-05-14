@@ -1,5 +1,6 @@
 package net.problemzone.bashit;
 
+import net.problemzone.bashit.listener.ChatListener;
 import net.problemzone.bashit.listener.PlayerInteractListener;
 import net.problemzone.bashit.listener.WorldProtectionListener;
 import net.problemzone.bashit.modules.GameListener;
@@ -63,6 +64,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WorldProtectionListener(), this);
         getServer().getPluginManager().registerEvents(new ItemListener(itemManager), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(gameManager), this);
     }
     
     @Override

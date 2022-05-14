@@ -27,7 +27,7 @@ public class RocketLauncher {
         lore.add(ChatColor.GRAY+ "Damage: " + ChatColor.RED + "12");
         lore.add(ChatColor.GRAY + "Item Ability:");
         lore.add("");
-        lore.add(ChatColor.AQUA + "=>  Right-Click to spend a night together");
+        lore.add(ChatColor.AQUA + "=>  Left-Click to spend a night together");
         lore.add("");
         lore.add(ChatColor.AQUA + "Only one Usage!");
         meta.setLore(lore);

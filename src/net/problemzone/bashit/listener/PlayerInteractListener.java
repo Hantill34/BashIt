@@ -1,16 +1,16 @@
 package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.Main;
-import net.problemzone.bashit.modules.itemManager.items.MG;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
@@ -24,13 +24,14 @@ public class PlayerInteractListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler()
     public void onPlayerInteractRLauncher(PlayerInteractEvent event) {
-        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)){
 
-            if(event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.CHEST) return;
+        if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)){
 
-            if(event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() != null
+           if(event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.CHEST) return;
+
+           if(event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() != null
             && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Boom, Boom, Boom, Boom")) {
 
                 Player player = event.getPlayer();
@@ -40,12 +41,12 @@ public class PlayerInteractListener implements Listener {
                 Location eye = player.getEyeLocation();
                 Firework firework = (Firework) Objects.requireNonNull(eye.getWorld()).spawnEntity(eye, EntityType.FIREWORK);
                 FireworkMeta meta = firework.getFireworkMeta();
-                meta.setPower(2);
+                meta.setPower(0);
                 firework.setFireworkMeta(meta);
                 firework.setShotAtAngle(true);
                 firework.setRotation(player.getLocation().getYaw(), player.getLocation().getPitch());
                 firework.setVelocity(eye.getDirection().normalize().multiply(2));
-                firework.setBounce(true);
+                firework.setBounce(false);
                 firework.setShooter(player);
                 player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 5 ,1);
 
@@ -62,8 +63,8 @@ public class PlayerInteractListener implements Listener {
         }
     }
 
-    private void fireworkExplosion(Firework firework, Player player){
-        firework.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, firework.getLocation(), 10);
+    public static void fireworkExplosion(Firework firework, Player player){
+        firework.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, firework.getLocation(), 7); //10
         firework.getWorld().playSound(firework.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5, 5);
 
         for(Entity entity : firework.getNearbyEntities(10,10,10)){
@@ -80,11 +81,21 @@ public class PlayerInteractListener implements Listener {
     @EventHandler
     public void onPlayerInteractMG(PlayerInteractEvent event){
         if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)){
-            if(Objects.requireNonNull(event.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getDisplayName().equals(ChatColor.GOLD + "Wumme")){
+
+            if(event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.CHEST) return;
+
+            ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
+
+            if(item.getItemMeta() == null) return;
+            if(item.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Wumme")){
+
+                ItemMeta wumme = item.getItemMeta();
+                wumme.setDisplayName(ChatColor.RED + "SHOOTING");
+                item.setItemMeta(wumme);
 
                 new BukkitRunnable(){
 
-                    int timer = 25;
+                    int timer = 10; //25
 
                     @Override
                     public void run(){
@@ -94,11 +105,10 @@ public class PlayerInteractListener implements Listener {
                             Arrow arrow = (Arrow) Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.ARROW);
                             arrow.setVelocity(loc.getDirection().normalize().multiply(2));
                             arrow.setShooter(event.getPlayer());
-
                         }
                         timer --;
                         if(timer == 0){
-                            event.getPlayer().getInventory().removeItem(MG.createMG());
+                            event.getPlayer().getInventory().removeItem(item);
                             event.getPlayer().getInventory().removeItem(new ItemStack(Material.ARROW));
                             cancel();
                         }
@@ -107,5 +117,9 @@ public class PlayerInteractListener implements Listener {
             }
         }
     }
+
+
 }
+
+
 
