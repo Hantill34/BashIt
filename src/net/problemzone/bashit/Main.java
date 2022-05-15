@@ -1,12 +1,12 @@
 package net.problemzone.bashit;
 
-import net.problemzone.bashit.listener.ChatListener;
-import net.problemzone.bashit.listener.PlayerInteractListener;
-import net.problemzone.bashit.listener.WorldProtectionListener;
+import net.problemzone.bashit.listener.*;
 import net.problemzone.bashit.modules.GameListener;
 import net.problemzone.bashit.modules.GameManager;
-import net.problemzone.bashit.listener.ItemListener;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
+import net.problemzone.bashit.modules.itemManager.PlayerManager;
+import net.problemzone.bashit.scoreboard.ScoreboardListener;
+import net.problemzone.bashit.scoreboard.ScoreboardManager;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -20,8 +20,10 @@ public final class Main extends JavaPlugin {
     private static JavaPlugin javaPlugin;
 
     private final ItemManager itemManager = new ItemManager();
+    private final PlayerManager playerManager = new PlayerManager();
+    private final ScoreboardManager scoreboardManager = new ScoreboardManager();
 
-    private final GameManager gameManager = new GameManager(itemManager);
+    private final GameManager gameManager = new GameManager(itemManager, playerManager, scoreboardManager);
 
 
     public static JavaPlugin getJavaPlugin() {
@@ -65,6 +67,9 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ItemListener(itemManager), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(gameManager), this);
+        getServer().getPluginManager().registerEvents(new DeathListener(),this);
+        getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
+        getServer().getPluginManager().registerEvents(new ScoreboardListener(scoreboardManager), this);
     }
     
     @Override

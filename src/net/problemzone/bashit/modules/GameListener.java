@@ -43,8 +43,8 @@ public class GameListener implements Listener {
         Player player = e.getPlayer();
         if(!player.getWorld().getUID().equals(Objects.requireNonNull(Bukkit.getWorld(Main.GAME_WORLD_NAME)).getUID())) return;
 
-        if (gameManager.getGameState() != GameManager.GameState.WAITING) return;
-        gameManager.startGame();
+        if (gameManager.getGameState() != GameManager.GameState.WRAPPING_UP) return;
+        gameManager.wrapUpGame(player);
         player.teleport(spawnpoints.get(playercount).toLocation(player.getWorld()));
         playercount ++;
     }

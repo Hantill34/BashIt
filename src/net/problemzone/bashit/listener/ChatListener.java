@@ -2,8 +2,6 @@ package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.modules.GameManager;
 import net.problemzone.bashit.util.Language;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

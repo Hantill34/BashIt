@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -43,7 +42,7 @@ public class ItemListener implements Listener {
         if (Objects.requireNonNull(event.getClickedBlock()).getType() != Material.CHEST) return;
 
         //TODO: give player item
-        int chance = random.nextInt(4);
+        int chance = random.nextInt(3);
         if (chance == 0) {
             player.getInventory().addItem(MG.createMG());
             player.getInventory().addItem(new ItemStack(Material.ARROW));
@@ -53,9 +52,6 @@ public class ItemListener implements Listener {
         }
         if (chance == 2) {
             player.getInventory().addItem(Shotgun.createShotgun());
-        }
-        if (chance == 3) {
-            player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
         }
 
         event.setCancelled(true);
@@ -122,9 +118,6 @@ public class ItemListener implements Listener {
                 if(bow.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Shotgun")){
                     if(player.getInventory().contains(new ItemStack(Shotgun.createShotgun()))){
                         player.getInventory().removeItem(new ItemStack(Shotgun.createShotgun()));
-                    }
-                    if(player.getInventory().containsAtLeast(new ItemStack(Material.ARROW), 1)){
-                        player.getInventory().removeItem(new ItemStack(Material.ARROW));
                     }
                     player.updateInventory();
 
