@@ -33,12 +33,12 @@ public class ScoreboardManager {
         objective.getScore("").setScore(15);
 
         //Countdown
-        objective.getScore(ChatColor.RED + "Nächster Mapwechsel:").setScore(14);
+        objective.getScore(ChatColor.RED + "Mapwechsel:").setScore(14);
 
         Team timeCounter = scoreboard.registerNewTeam(TIME);
-        timeCounter.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+        timeCounter.addEntry(ChatColor.RED + " " + ChatColor.WHITE);
         timeCounter.setPrefix(formatTimeSeconds(GameManager.START_TIME));
-        objective.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(13);
+        objective.getScore(ChatColor.RED + " " + ChatColor.WHITE).setScore(13);
 
         objective.getScore("  ").setScore(12);
 
@@ -46,9 +46,9 @@ public class ScoreboardManager {
         objective.getScore(ChatColor.WHITE + "Kills:").setScore(11);
 
         Team killCounter = scoreboard.registerNewTeam("killCounter");
-        killCounter.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+        killCounter.addEntry(ChatColor.RED + "  " + ChatColor.WHITE);
         killCounter.setPrefix(ChatColor.GOLD + "" + playerKills.get(player));
-        objective.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(10);
+        objective.getScore(ChatColor.RED + "  " + ChatColor.WHITE).setScore(10);
 
         objective.getScore("   ").setScore(9);
 
@@ -56,9 +56,9 @@ public class ScoreboardManager {
         objective.getScore(ChatColor.WHITE + "Tode:").setScore(8);
 
         Team deathCounter = scoreboard.registerNewTeam("deathCounter");
-        deathCounter.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+        deathCounter.addEntry(ChatColor.RED + "   " + ChatColor.WHITE);
         deathCounter.setPrefix(ChatColor.GOLD + "" + playerDeaths.get(player));
-        objective.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(7);
+        objective.getScore(ChatColor.RED + "   " + ChatColor.WHITE).setScore(7);
 
         objective.getScore("    ").setScore(6);
 
@@ -66,9 +66,9 @@ public class ScoreboardManager {
         objective.getScore(ChatColor.WHITE + "Kills/Deaths:").setScore(5);
 
         Team kdCounter = scoreboard.registerNewTeam("kdCounter");
-        kdCounter.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+        kdCounter.addEntry(ChatColor.RED + "    " + ChatColor.WHITE);
         kdCounter.setPrefix(ChatColor.GOLD + "GODLIKE");
-        objective.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(4);
+        objective.getScore(ChatColor.RED + "    " + ChatColor.WHITE).setScore(4);
 
         objective.getScore("     ").setScore(3);
 
@@ -76,15 +76,15 @@ public class ScoreboardManager {
         objective.getScore(ChatColor.WHITE + "Killstreak:").setScore(2);
 
         Team killStreak = scoreboard.registerNewTeam("killStreak");
-        killStreak.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+        killStreak.addEntry(ChatColor.RED + "     " + ChatColor.WHITE);
         killStreak.setPrefix(ChatColor.GOLD + "0");
-        objective.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(1);
+        objective.getScore(ChatColor.RED + "     " + ChatColor.WHITE).setScore(1);
 
         player.setScoreboard(scoreboard);
 
     }
 
-//TODO: Methoden an scoreboard anpassen
+//TODO: Methoden
 
     public void startTimeCountdown(int seconds) {
         if (scoreboardTime != null && !scoreboardTime.isCancelled()) scoreboardTime.cancel();

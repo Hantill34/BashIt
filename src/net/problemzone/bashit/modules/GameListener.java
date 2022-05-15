@@ -42,9 +42,7 @@ public class GameListener implements Listener {
     public void onPlayerJoin(PlayerChangedWorldEvent e) {
         Player player = e.getPlayer();
         if(!player.getWorld().getUID().equals(Objects.requireNonNull(Bukkit.getWorld(Main.GAME_WORLD_NAME)).getUID())) return;
-
-        if (gameManager.getGameState() != GameManager.GameState.WRAPPING_UP) return;
-        gameManager.wrapUpGame(player);
+        gameManager.wrapUpGame();
         player.teleport(spawnpoints.get(playercount).toLocation(player.getWorld()));
         playercount ++;
     }

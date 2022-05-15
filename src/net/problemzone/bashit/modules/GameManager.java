@@ -8,10 +8,7 @@ import net.problemzone.bashit.util.Countdown;
 import net.problemzone.bashit.util.Language;
 import net.problemzone.bashit.util.Sounds;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -23,7 +20,8 @@ public class GameManager {
     private final static int MAX_PLAYERS = 2;
 
     public final static int START_TIME = 20;
-    public final static int FIGHT_TIME = 360;
+    public final static int FIGHT_TIME = 20;
+    public final static int FINAL_LOBBY_TIME = 20;
 
     private static GameState gameState = GameState.WRAPPING_UP;
     private final ItemManager itemManager;
@@ -47,7 +45,8 @@ public class GameManager {
         FINISHED
     }
 
-    public void wrapUpGame(Player player){
+    public void wrapUpGame(){
+        if(gameState != GameState.WRAPPING_UP) return;
         gameState = GameState.WAITING;
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(Language.JOIN_MESSAGE.getFormattedText());
@@ -57,16 +56,21 @@ public class GameManager {
         new BukkitRunnable(){
             @Override
             public void run(){
-                startGame(player);
+                startGame();
             }
         }.runTaskLater(Main.getJavaPlugin(), START_TIME * 20L);
 
     }
 
-    public void startGame(Player player) {
+    public void registerPlayer(Player player){
+        scoreboardManager.setGameScoreboard(player);
+        playerManager.equipPlayer(player);
+    }
+
+    public void startGame() {
         if (gameState != GameState.WAITING) return;
         gameState = GameState.RUNNING;
-        scoreboardManager.setGameScoreboard(player);
+        Bukkit.getOnlinePlayers().forEach(this::registerPlayer);
         scoreboardManager.startTimeCountdown(FIGHT_TIME);
         Bukkit.broadcastMessage(Language.KAMPFPHASE.getFormattedText());
 
@@ -77,6 +81,7 @@ public class GameManager {
             itemManager.generateEmeraldBlock(Objects.requireNonNull(Bukkit.getWorld("BashIt")));
         }
 
+        Countdown.createChatCountdown(FIGHT_TIME, Language.Round_END);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -95,6 +100,9 @@ public class GameManager {
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> player.teleport(Objects.requireNonNull(Bukkit.getWorld("Lobby")).getSpawnLocation()));
                 Bukkit.getOnlinePlayers().forEach(Sounds.GAME_WIN::playSoundForPlayer);
+                Countdown.createChatCountdown(FINAL_LOBBY_TIME, Language.ROUND_CHANGE);
+                Countdown.createXpBarCountdown(FINAL_LOBBY_TIME);
+                Countdown.createLevelCountdown(FINAL_LOBBY_TIME, null);
             }
         }.runTaskLater(Main.getJavaPlugin(), 5);
     }

@@ -67,7 +67,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ItemListener(itemManager), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(gameManager), this);
-        getServer().getPluginManager().registerEvents(new DeathListener(),this);
+        getServer().getPluginManager().registerEvents(new DeathListener(playerManager),this);
         getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
         getServer().getPluginManager().registerEvents(new ScoreboardListener(scoreboardManager), this);
     }

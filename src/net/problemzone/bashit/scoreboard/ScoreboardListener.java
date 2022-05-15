@@ -1,9 +1,13 @@
 package net.problemzone.bashit.scoreboard;
 
 import net.problemzone.bashit.util.Language;
+import net.problemzone.bashit.util.Sounds;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -18,29 +22,47 @@ public class ScoreboardListener implements Listener {
         this.scoreboardManager = scoreboardManager;
     }
 
-
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player p = event.getPlayer();
 
         scoreboardManager.initPlayer(p);
-        scoreboardManager.updateScoreboard();
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
+    public void onPlayerDeathDamage(EntityDamageEvent e) {
+        if(e.isCancelled()) return;
+        if (!(e.getEntity() instanceof Player)) return;
 
-        event.setDeathMessage(String.format(Language.PLAYER_DEATH.getFormattedText(), event.getEntity().getName()));
+        Player player = (Player) e.getEntity();
+        if (!(player.getHealth() - e.getFinalDamage() <= 0)) return;
 
-        if(Objects.requireNonNull(event.getEntity().getLastDamageCause()).getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-            if (event.getEntity().getKiller() != null) {
-                scoreboardManager.increaseKillCounter(event.getEntity().getKiller());
-                event.setDeathMessage(String.format(Language.PLAYER_DEATH_BY_PLAYER.getFormattedText(), event.getEntity().getName(), event.getEntity().getKiller().getName()));
-            }
+        scoreboardManager.increaseDeathCounter(player);
+        scoreboardManager.updateScoreboard();
+        Sounds.DEATH.playSoundForPlayer(player);
 
-            scoreboardManager.increaseDeathCounter(event.getEntity());
-            scoreboardManager.updateScoreboard();
+        if(!(e instanceof EntityDamageByEntityEvent)) return;
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
+
+        if(event.getDamager() instanceof Player) {
+            Player damager = (Player) event.getDamager();
+            Sounds.KILL.playSoundForPlayer(damager);
+            scoreboardManager.increaseKillCounter(damager);
+            damager.sendMessage(String.format(Language.KILLER.getFormattedText(), player.getDisplayName()));
+            Bukkit.getOnlinePlayers().stream().filter(p -> p != damager).forEach(p -> p.sendMessage(String.format(Language.PLAYER_DEATH_BY_PLAYER.getFormattedText(), damager.getDisplayName())));
+
         }
+
+        if (event.getDamager() instanceof Arrow){
+            Arrow arrow = (Arrow) event.getDamager();
+            if(!(arrow.getShooter() instanceof Player)) return;
+            Player damager = (Player) arrow.getShooter();
+            Sounds.KILL.playSoundForPlayer(damager);
+            scoreboardManager.increaseKillCounter(damager);
+            damager.sendMessage(String.format(Language.KILLER.getFormattedText(), player.getDisplayName()));
+            Bukkit.getOnlinePlayers().stream().filter(p -> p != damager).forEach(p -> p.sendMessage(String.format(Language.PLAYER_DEATH_BY_PLAYER.getFormattedText(), damager.getDisplayName())));
+
+        }
+
     }
 }

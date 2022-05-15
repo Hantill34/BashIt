@@ -129,6 +129,7 @@ public class ItemListener implements Listener {
                         Random random = new Random();
                         v.add(new Vector(random.nextDouble() - 0.5, random.nextDouble() - 0.5, random.nextDouble() - 0.5));
                         player.launchProjectile(Arrow.class).setVelocity(v);
+
                     }
 
                 }
