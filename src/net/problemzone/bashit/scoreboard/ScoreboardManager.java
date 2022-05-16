@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,6 +23,7 @@ public class ScoreboardManager {
     private final Map<Player, Integer> playerDeaths = new HashMap<>();
     private final Map<Player, Integer> playerKills = new HashMap<>();
     private final Map<Player, Integer> playerKillStreak = new HashMap<>();
+    private final Map<Player, Integer> playerPoints = new HashMap<>();
 
 
     private BukkitTask scoreboardTime;
@@ -52,22 +54,22 @@ public class ScoreboardManager {
 
         objective.getScore("   ").setScore(9);
 
-        //Deaths
-        objective.getScore(ChatColor.WHITE + "Tode:").setScore(8);
+        //Peanut Leader
+        objective.getScore(ChatColor.WHITE + "Leader:").setScore(8);
 
-        Team deathCounter = scoreboard.registerNewTeam("deathCounter");
+        Team deathCounter = scoreboard.registerNewTeam("showLeader");
         deathCounter.addEntry(ChatColor.RED + "   " + ChatColor.WHITE);
-        deathCounter.setPrefix(ChatColor.GOLD + "" + playerDeaths.get(player));
+        deathCounter.setPrefix(ChatColor.GOLD + "" + playerPoints.get(player));
         objective.getScore(ChatColor.RED + "   " + ChatColor.WHITE).setScore(7);
 
         objective.getScore("    ").setScore(6);
 
-        //Kill/Death Ratio
-        objective.getScore(ChatColor.WHITE + "Kills/Deaths:").setScore(5);
+        //Players Peanuts
+        objective.getScore(ChatColor.WHITE + "Peanuts:").setScore(5);
 
-        Team kdCounter = scoreboard.registerNewTeam("kdCounter");
+        Team kdCounter = scoreboard.registerNewTeam("peanutCounter");
         kdCounter.addEntry(ChatColor.RED + "    " + ChatColor.WHITE);
-        kdCounter.setPrefix(ChatColor.GOLD + "GODLIKE");
+        kdCounter.setPrefix(ChatColor.GOLD + "" + playerPoints.get(player));
         objective.getScore(ChatColor.RED + "    " + ChatColor.WHITE).setScore(4);
 
         objective.getScore("     ").setScore(3);
@@ -126,12 +128,18 @@ public class ScoreboardManager {
         Objects.requireNonNull(board.getTeam("killStreak")).setPrefix(ChatColor.GOLD + "" + playerKillStreak.get(player));
     }
 
+    private void updatePoints(Player player){
+        Scoreboard board = player.getScoreboard();
+        Objects.requireNonNull(board.getTeam("peanutCounter")).setPrefix(ChatColor.GOLD + "" + playerPoints.get(player));
+    }
+
     public void updateScoreboard() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             updateDeath(player);
             updateKill(player);
             updateKD(player);
             updateKillstreak(player);
+            updatePoints(player);
         }
     }
 
@@ -149,10 +157,20 @@ public class ScoreboardManager {
         playerKillStreak.put(player, 0);
     }
 
+    public void increasePoints(Player player){
+        playerPoints.put(player, playerPoints.get(player) + 5);
+        playerPoints.put(player, 0);
+    }
+    public void decreasePoints(Player player){
+        playerPoints.put(player, playerPoints.get(player) - 2);
+        playerPoints.put(player, 0);
+    }
+
     public void initPlayer(Player player) {
         playerKills.put(player, 0);
         playerDeaths.put(player, 0);
         playerKillStreak.put(player, 0);
+        playerPoints.put(player, 0);
     }
 
 

@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Objects;
@@ -48,7 +47,11 @@ public class ScoreboardListener implements Listener {
             Player damager = (Player) event.getDamager();
             Sounds.KILL.playSoundForPlayer(damager);
             scoreboardManager.increaseKillCounter(damager);
+            scoreboardManager.increasePoints(damager);
+            scoreboardManager.decreasePoints(player);
             damager.sendMessage(String.format(Language.KILLER.getFormattedText(), player.getDisplayName()));
+            damager.sendMessage(String.format(Language.GET_POINTS.getFormattedText()));
+            player.sendMessage(String.format(Language.REMOVE_POINTS.getFormattedText()));
             Bukkit.getOnlinePlayers().stream().filter(p -> p != damager).forEach(p -> p.sendMessage(String.format(Language.PLAYER_DEATH_BY_PLAYER.getFormattedText(), damager.getDisplayName())));
 
         }
@@ -59,6 +62,10 @@ public class ScoreboardListener implements Listener {
             Player damager = (Player) arrow.getShooter();
             Sounds.KILL.playSoundForPlayer(damager);
             scoreboardManager.increaseKillCounter(damager);
+            scoreboardManager.increasePoints(damager);
+            scoreboardManager.decreasePoints(player);
+            damager.sendMessage(String.format(Language.GET_POINTS.getFormattedText()));
+            player.sendMessage(String.format(Language.REMOVE_POINTS.getFormattedText()));
             damager.sendMessage(String.format(Language.KILLER.getFormattedText(), player.getDisplayName()));
             Bukkit.getOnlinePlayers().stream().filter(p -> p != damager).forEach(p -> p.sendMessage(String.format(Language.PLAYER_DEATH_BY_PLAYER.getFormattedText(), damager.getDisplayName())));
 
