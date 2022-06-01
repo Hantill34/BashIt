@@ -5,6 +5,7 @@ import net.problemzone.bashit.modules.GameListener;
 import net.problemzone.bashit.modules.GameManager;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
 import net.problemzone.bashit.modules.itemManager.PlayerManager;
+import net.problemzone.bashit.modules.kits.KitManager;
 import net.problemzone.bashit.scoreboard.ScoreboardListener;
 import net.problemzone.bashit.scoreboard.ScoreboardManager;
 import org.bukkit.GameRule;
@@ -24,6 +25,8 @@ public final class Main extends JavaPlugin {
     private final ScoreboardManager scoreboardManager = new ScoreboardManager();
 
     private final GameManager gameManager = new GameManager(itemManager, playerManager, scoreboardManager);
+
+    public KitManager kitManager = new KitManager(gameManager);
 
 
     public static JavaPlugin getJavaPlugin() {
@@ -70,10 +73,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathListener(playerManager),this);
         getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
         getServer().getPluginManager().registerEvents(new ScoreboardListener(scoreboardManager), this);
+        getServer().getPluginManager().registerEvents(new KitListener(gameManager, kitManager), this);
     }
-    
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+
 }

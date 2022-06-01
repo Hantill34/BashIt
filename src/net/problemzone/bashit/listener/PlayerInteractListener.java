@@ -47,8 +47,8 @@ public class PlayerInteractListener implements Listener {
                 firework.setRotation(player.getLocation().getYaw(), player.getLocation().getPitch());
                 firework.setVelocity(eye.getDirection().normalize().multiply(2));
                 firework.setBounce(false);
-                firework.setShooter(player);
                 player.getWorld().playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 5 ,1);
+                firework.setShooter(player);
 
                 new BukkitRunnable(){
                     public void run(){

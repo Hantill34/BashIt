@@ -110,7 +110,7 @@ public class ItemListener implements Listener {
         Player player = (Player) event.getPlayer();
         ItemStack bow = event.getPlayer().getInventory().getItemInMainHand();
 
-        if(bow.getItemMeta().getDisplayName() != null){
+        if(bow.getItemMeta() != null && bow.getItemMeta().getDisplayName() != null){
             if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)){
 
 

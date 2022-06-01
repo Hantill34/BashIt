@@ -1,6 +1,8 @@
 package net.problemzone.bashit.modules;
 
 import net.problemzone.bashit.Main;
+import net.problemzone.lobbibi.modules.events.GameFinishEvent;
+import net.problemzone.lobbibi.modules.events.GameStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,21 +41,31 @@ public class GameListener implements Listener {
     }
 
     @EventHandler
+    public void onGameStart(GameStartEvent event){
+        Bukkit.broadcastMessage("Jürgenwurgen");
+        for(Player player : Bukkit.getOnlinePlayers()){
+            if(player.getWorld().getUID().equals(Objects.requireNonNull(Bukkit.getWorld(Main.GAME_WORLD_NAME)).getUID())) return;
+            gameManager.wrapUpGame();
+            player.teleport(spawnpoints.get(playercount).toLocation(Objects.requireNonNull(Bukkit.getWorld(Main.GAME_WORLD_NAME))));
+            playercount ++;
+        }
+    }
+
+   /* @EventHandler
     public void onPlayerJoin(PlayerChangedWorldEvent e) {
         Player player = e.getPlayer();
         if(!player.getWorld().getUID().equals(Objects.requireNonNull(Bukkit.getWorld(Main.GAME_WORLD_NAME)).getUID())) return;
         gameManager.wrapUpGame();
         player.teleport(spawnpoints.get(playercount).toLocation(player.getWorld()));
         playercount ++;
-    }
+    }*/
 
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event){
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         Random random = new Random();
 
         event.setRespawnLocation(spawnpoints.get(random.nextInt(spawnpoints.size())).toLocation(player.getWorld()));
     }
-
 
 }

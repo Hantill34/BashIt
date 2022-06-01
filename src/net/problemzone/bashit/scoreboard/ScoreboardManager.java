@@ -10,8 +10,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
 
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,7 +20,7 @@ public class ScoreboardManager {
 
     private static final String TIME = "timeCounter";
 
-    private final Map<Player, Integer> playerDeaths = new HashMap<>();
+    //private final Map<Player, Integer> playerDeaths = new HashMap<>();
     private final Map<Player, Integer> playerKills = new HashMap<>();
     private final Map<Player, Integer> playerKillStreak = new HashMap<>();
     private final Map<Player, Integer> playerPoints = new HashMap<>();
@@ -59,7 +59,7 @@ public class ScoreboardManager {
 
         Team deathCounter = scoreboard.registerNewTeam("showLeader");
         deathCounter.addEntry(ChatColor.RED + "   " + ChatColor.WHITE);
-        deathCounter.setPrefix(ChatColor.GOLD + "" + playerPoints.get(player));
+        deathCounter.setPrefix(ChatColor.GOLD + ""+ playerPoints.get(player));
         objective.getScore(ChatColor.RED + "   " + ChatColor.WHITE).setScore(7);
 
         objective.getScore("    ").setScore(6);
@@ -108,19 +108,9 @@ public class ScoreboardManager {
         Bukkit.getOnlinePlayers().forEach(player -> Objects.requireNonNull(player.getScoreboard().getTeam(TIME)).setPrefix(formatTimeSeconds(seconds)));
     }
 
-    private void updateDeath(Player player) {
-        Scoreboard board = player.getScoreboard();
-        Objects.requireNonNull(board.getTeam("deathCounter")).setPrefix(ChatColor.GOLD + "" + playerDeaths.get(player));
-    }
-
     private void updateKill(Player player) {
         Scoreboard board = player.getScoreboard();
         Objects.requireNonNull(board.getTeam("killCounter")).setPrefix(ChatColor.GOLD + "" + playerKills.get(player));
-    }
-
-    private void updateKD(Player player) {
-        Scoreboard board = player.getScoreboard();
-        Objects.requireNonNull(board.getTeam("kdCounter")).setPrefix(ChatColor.GOLD + "" + (playerDeaths.get(player) == 0 ? "GOD" : Math.round((playerKills.get(player) / (double) playerDeaths.get(player)) * 100.0) / 100.0));
     }
 
     private void updateKillstreak(Player player) {
@@ -135,9 +125,7 @@ public class ScoreboardManager {
 
     public void updateScoreboard() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            updateDeath(player);
             updateKill(player);
-            updateKD(player);
             updateKillstreak(player);
             updatePoints(player);
         }
@@ -152,25 +140,17 @@ public class ScoreboardManager {
         }
     }
 
-    public void increaseDeathCounter(Player player) {
-        playerDeaths.put(player, playerDeaths.get(player) + 1);
-        playerKillStreak.put(player, 0);
-    }
-
     public void increasePoints(Player player){
         playerPoints.put(player, playerPoints.get(player) + 5);
-        playerPoints.put(player, 0);
     }
     public void decreasePoints(Player player){
         playerPoints.put(player, playerPoints.get(player) - 2);
-        playerPoints.put(player, 0);
     }
 
     public void initPlayer(Player player) {
         playerKills.put(player, 0);
-        playerDeaths.put(player, 0);
-        playerKillStreak.put(player, 0);
         playerPoints.put(player, 0);
+        playerKillStreak.put(player, 0);
     }
 
 
@@ -181,6 +161,10 @@ public class ScoreboardManager {
 
     private String formatTimeNumber(int number) {
         return (number < 10 ? "0" : "") + number;
+    }
+
+    public Player getLeader(){
+         return Collections.max(playerPoints.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
 }
