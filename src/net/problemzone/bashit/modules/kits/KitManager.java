@@ -1,6 +1,6 @@
 package net.problemzone.bashit.modules.kits;
 
-import net.problemzone.bashit.modules.GameManager;
+import net.problemzone.bashit.modules.kits.Kits.Pilot;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,23 +9,30 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class KitManager {
 
-    private final GameManager gameManager;
 
-    private final List <Kit> kits = new ArrayList<>();
+    private final List<Kit> kits = new ArrayList<>();
 
-    private final Map <Player, Kit> playerKitMap = new HashMap<>();
+    private final Map<Player, Kit> playerKitMap = new HashMap<>();
 
 
-    public KitManager(GameManager gameManager){
+    public KitManager() {
         //kits.add();
-        this.gameManager = gameManager;
+        kits.add(new Pilot());
     }
 
-    public void giveKitSelector(Player player){
+    public void equipPlayer(Player player) {
+        player.getInventory().clear();
+        playerKitMap.get(player).equip(player);
+    }
+
+    public void giveKitSelector(Player player) {
 
         ItemStack star = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta starItemMeta = star.getItemMeta();
@@ -35,6 +42,7 @@ public class KitManager {
         star.setItemMeta(starItemMeta);
 
         player.getInventory().setItem(0, star);
+        playerKitMap.put(player, new Pilot());
     }
 
     /*public void removeOperatorSelector(Player player){
@@ -46,10 +54,10 @@ public class KitManager {
         }
     }*/
 
-    public void openOperatorInventory(Player player){
+    public void openOperatorInventory(Player player) {
         Inventory inv = Bukkit.createInventory(null, 18, ChatColor.DARK_RED + "Wähle deinen Operator");
 
-        inv.setItem(0, new ItemStack(Material.IRON_CHESTPLATE));
+        inv.setItem(0, kits.get(0).getItem());
 
         player.openInventory(inv);
     }
@@ -71,8 +79,7 @@ public class KitManager {
         playerKitMap.put(player, kit);
     }
 
-    public Kit getKitByPlayer(Player player)
-    {
+    public Kit getKitByPlayer(Player player) {
         return playerKitMap.get(player);
     }
 

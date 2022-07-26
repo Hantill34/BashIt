@@ -1,6 +1,7 @@
 package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.modules.itemManager.PlayerManager;
+import net.problemzone.bashit.modules.kits.KitManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,10 +9,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class DeathListener implements Listener {
 
-    private final PlayerManager playerManager;
+    private final KitManager kitManager;
 
     public DeathListener(PlayerManager playerManager) {
-        this.playerManager = playerManager;
+        this.kitManager = new KitManager();
     }
 
     @EventHandler
@@ -19,7 +20,7 @@ public class DeathListener implements Listener {
         Player player = event.getEntity().getPlayer();
         if (player == null) return;
 
-        playerManager.equipPlayer(player);
+        kitManager.equipPlayer(player);
 
     }
 

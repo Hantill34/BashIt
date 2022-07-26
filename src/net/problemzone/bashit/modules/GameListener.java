@@ -1,13 +1,11 @@
 package net.problemzone.bashit.modules;
 
 import net.problemzone.bashit.Main;
-import net.problemzone.lobbibi.modules.events.GameFinishEvent;
 import net.problemzone.lobbibi.modules.events.GameStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.Vector;
 
@@ -15,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-
 
 public class GameListener implements Listener {
 
@@ -42,7 +39,6 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onGameStart(GameStartEvent event){
-        Bukkit.broadcastMessage("Jürgenwurgen");
         for(Player player : Bukkit.getOnlinePlayers()){
             if(player.getWorld().getUID().equals(Objects.requireNonNull(Bukkit.getWorld(Main.GAME_WORLD_NAME)).getUID())) return;
             gameManager.wrapUpGame();

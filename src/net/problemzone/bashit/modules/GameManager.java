@@ -3,6 +3,7 @@ package net.problemzone.bashit.modules;
 import net.problemzone.bashit.Main;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
 import net.problemzone.bashit.modules.itemManager.PlayerManager;
+import net.problemzone.bashit.modules.kits.KitManager;
 import net.problemzone.bashit.scoreboard.ScoreboardManager;
 import net.problemzone.bashit.util.Countdown;
 import net.problemzone.bashit.util.Language;
@@ -28,13 +29,15 @@ public class GameManager {
     private final ItemManager itemManager;
     private final PlayerManager playerManager;
     private final ScoreboardManager scoreboardManager;
+    private final KitManager kitManager;
 
     private final List<Player> playing = new ArrayList<>();
 
-    public GameManager(ItemManager itemManager, PlayerManager playerManager, ScoreboardManager scoreboardManager) {
+    public GameManager(ItemManager itemManager, PlayerManager playerManager, ScoreboardManager scoreboardManager, KitManager kitManager) {
         this.itemManager = itemManager;
         this.playerManager = playerManager;
         this.scoreboardManager = scoreboardManager;
+        this.kitManager = kitManager;
     }
 
     public enum GameState {
@@ -53,8 +56,8 @@ public class GameManager {
         Bukkit.broadcastMessage(Language.JOIN_MESSAGE.getFormattedText());
         Bukkit.broadcastMessage("");
         Countdown.createChatCountdown(START_TIME, Language.FIGHT_START);
-
-        new BukkitRunnable(){
+        Bukkit.getOnlinePlayers().forEach(this::registerPlayer);
+       new BukkitRunnable(){
             @Override
             public void run(){
                 startGame();
@@ -65,13 +68,13 @@ public class GameManager {
 
     public void registerPlayer(Player player){
         scoreboardManager.setGameScoreboard(player);
-        playerManager.equipPlayer(player);
+        kitManager.equipPlayer(player);
     }
 
     public void startGame() {
         if (gameState != GameState.WAITING) return;
         gameState = GameState.RUNNING;
-        Bukkit.getOnlinePlayers().forEach(this::registerPlayer);
+
         scoreboardManager.startTimeCountdown(FIGHT_TIME);
         Bukkit.broadcastMessage(Language.KAMPFPHASE.getFormattedText());
 

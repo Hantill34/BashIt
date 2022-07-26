@@ -1,6 +1,5 @@
 package net.problemzone.bashit.listener;
 
-import net.problemzone.bashit.modules.GameManager;
 import net.problemzone.bashit.modules.kits.Kit;
 import net.problemzone.bashit.modules.kits.KitManager;
 import org.bukkit.ChatColor;
@@ -12,22 +11,34 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
+
+import java.util.Objects;
 
 public class KitListener implements Listener {
 
-    private final GameManager gameManager;
-    private final KitManager kitManager;
 
-    public KitListener(GameManager gameManager, KitManager kitManager) {
-        this.gameManager = gameManager;
+    private final KitManager kitManager;
+    private final String OPERATORSELECTOR = ChatColor.DARK_RED + "Wähle deinen Operator";
+
+    public KitListener(KitManager kitManager) {
         this.kitManager = kitManager;
     }
 
+    //Operator Selector Listener
     @EventHandler
-    public void onChooseOpenInv(PlayerInteractEvent event){
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
-            if(event.getItem().getType() == Material.NETHER_STAR){
+    public void giveSelector(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        kitManager.giveKitSelector(player);
+    }
+
+    @EventHandler
+    public void onChooseOpenInv(PlayerInteractEvent event) {
+        if(event.getItem() == null) return;
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
+            if ((event.getItem()).getType() == Material.NETHER_STAR) {
                 event.setCancelled(true);
                 kitManager.openOperatorInventory(event.getPlayer());
             }
@@ -35,35 +46,27 @@ public class KitListener implements Listener {
     }
 
     @EventHandler
-    public void onOperatorClick(InventoryClickEvent event){
-        if(event.getCurrentItem() != null){
-            if(event.getView().getTitle().equals(ChatColor.DARK_RED + "Operatorauswahl")){
+    public void onClick(InventoryClickEvent event) {
+        if (event.getCurrentItem() != null) {
+            if (event.getView().getTitle().equals(OPERATORSELECTOR)) {
                 Player player = (Player) event.getWhoClicked();
-                Kit kit = kitManager.getKitByName(event.getCurrentItem().getItemMeta().getDisplayName());
-                kit.equip(player);
+                Kit kit = kitManager.getKitByName(Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName());
                 kitManager.putPlayerInMap(player, kit);
-            }
-        }
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void hasKitSelector(PlayerInteractEvent event){
-        Player player = event.getPlayer();
-
-        for (ItemStack item : player.getInventory()){
-            if(item.getItemMeta().getDisplayName().equals(ChatColor.DARK_RED + "Operatorauswahl")){
-                if(item.getAmount() > 1){
-                    item.setAmount(item.getAmount() - 1);
-                    player.updateInventory();
-                }
+                event.getView().close();
+                event.setCancelled(true);
             }
         }
     }
-
+    //Kit Listener
     @EventHandler
-    public void giveSelector(PlayerJoinEvent event){
-        Player player = event.getPlayer();
-        kitManager.giveKitSelector(player);
+    public void onItemClick(PlayerInteractEvent event){
+        if(event.getItem() == null) return;
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
+            if(Objects.requireNonNull(event.getItem().getItemMeta()).getDisplayName().equals(ChatColor.AQUA + "Jetpack")){
+                event.getPlayer().setVelocity(new Vector(0, 1, 0));
+                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 3 * 20, 0, false, false, false));
+                event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
+            }
+        }
     }
 }

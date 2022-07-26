@@ -23,10 +23,10 @@ public final class Main extends JavaPlugin {
     private final ItemManager itemManager = new ItemManager();
     private final PlayerManager playerManager = new PlayerManager();
     private final ScoreboardManager scoreboardManager = new ScoreboardManager();
+    public KitManager kitManager = new KitManager();
+    private final GameManager gameManager = new GameManager(itemManager, playerManager, scoreboardManager, kitManager);
 
-    private final GameManager gameManager = new GameManager(itemManager, playerManager, scoreboardManager);
 
-    public KitManager kitManager = new KitManager(gameManager);
 
 
     public static JavaPlugin getJavaPlugin() {
@@ -73,7 +73,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathListener(playerManager),this);
         getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
         getServer().getPluginManager().registerEvents(new ScoreboardListener(scoreboardManager), this);
-        getServer().getPluginManager().registerEvents(new KitListener(gameManager, kitManager), this);
+        getServer().getPluginManager().registerEvents(new KitListener(kitManager), this);
     }
 
 }
