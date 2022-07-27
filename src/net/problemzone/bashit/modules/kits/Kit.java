@@ -34,6 +34,7 @@ public abstract class Kit implements Listener {
     {
         ItemStack it = new ItemStack(mat);
         ItemMeta m =  it.getItemMeta();
+        assert m != null;
         m.setDisplayName(name);
         it.setItemMeta(m);
         return it;

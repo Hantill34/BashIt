@@ -4,6 +4,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ItemManager {
@@ -17,6 +20,8 @@ public class ItemManager {
     private static final int Z_START = -1039;
 
     private static final int MAX_Y = 47;
+
+    public static ArrayList<Player> zoomin = new ArrayList<Player>();
 
     public void generateChest(World world){
         Random random = new Random();

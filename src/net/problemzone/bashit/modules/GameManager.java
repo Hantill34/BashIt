@@ -56,6 +56,7 @@ public class GameManager {
         Bukkit.broadcastMessage(Language.JOIN_MESSAGE.getFormattedText());
         Bukkit.broadcastMessage("");
         Countdown.createChatCountdown(START_TIME, Language.FIGHT_START);
+        Bukkit.getOnlinePlayers().forEach(playerManager::wrapUpPlayer);
         Bukkit.getOnlinePlayers().forEach(this::registerPlayer);
        new BukkitRunnable(){
             @Override
@@ -68,6 +69,7 @@ public class GameManager {
 
     public void registerPlayer(Player player){
         scoreboardManager.setGameScoreboard(player);
+        //kitManager.removeKitSelector(player);
         kitManager.equipPlayer(player);
     }
 

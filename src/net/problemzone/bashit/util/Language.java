@@ -8,13 +8,13 @@ public enum Language {
 
 
     JOIN(ChatColor.GREEN + "» " + ChatColor.WHITE + "%s"),
-    JOIN_MESSAGE(ChatColor.GRAY + "Spielmodus " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "BashIt " + ChatColor.RESET + ChatColor.GRAY + "erfolgreich beigetreten!"),
+    JOIN_MESSAGE(ChatColor.GRAY + "Spielmodus " + ChatColor.YELLOW + ChatColor.BOLD + "Bash" +ChatColor.GOLD + "It " + ChatColor.RESET + ChatColor.GRAY + "erfolgreich beigetreten!"),
     QUIT_MESSAGE(ChatColor.RED + "« " + ChatColor.GRAY + "%s"),
     KIT_MESSAGE(ChatColor.GRAY + "Du hast das Kit " + ChatColor.GOLD + "%s " + ChatColor.GRAY + "ausgewählt!"),
 
 
-    FIGHT_START("Der Kampf beginnt in: " + ChatColor.YELLOW + "%d" + ChatColor.GRAY + " Sekunden"),
-    KAMPFPHASE(ChatColor.GRAY + "Die " + ChatColor.RED + "Kampfphase " + ChatColor.GRAY + "hat begonnen!"),
+    FIGHT_START("Kisten spawnen in " + ChatColor.YELLOW + "%d" + ChatColor.GRAY + " Sekunden"),
+    KAMPFPHASE(ChatColor.GRAY + "Kisten sind " + ChatColor.RED + "gespawnt" + ChatColor.GRAY + "."),
 
 
 
@@ -30,6 +30,7 @@ public enum Language {
     GLOBAL_KILLSTREAK(ChatColor.RED + "Der Spieler " + ChatColor.GOLD + "%s" + ChatColor.RED + " hat eine Killstreak von " + ChatColor.GOLD + "%d " + ChatColor.RED + "erreicht!"),
 
 
+    NO_AMMUNITION(ChatColor.RED +"Du hast keine Munition mehr."),
 
     ROUND_CHANGE(ChatColor.RED + "Nächste Runde startet in: " + ChatColor.YELLOW + "%d" + ChatColor.RED + " Sekunden"),
     Round_END("Die Runde endet in: " + ChatColor.YELLOW + "%d" + ChatColor.GRAY + " Sekunden"),
@@ -43,7 +44,7 @@ public enum Language {
 
     ;
 
-    private static final String SYSTEM_PREFIX = ChatColor.LIGHT_PURPLE + "BashIt " + ChatColor.DARK_GRAY + "» ";
+    private static final String SYSTEM_PREFIX = ChatColor.BOLD + "" + ChatColor.YELLOW + "Bash" + ChatColor.GOLD + "It" + ChatColor.DARK_GRAY + "» ";
     private final String text;
 
     Language(String text) {

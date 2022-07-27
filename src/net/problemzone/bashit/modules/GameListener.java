@@ -1,6 +1,7 @@
 package net.problemzone.bashit.modules;
 
 import net.problemzone.bashit.Main;
+import net.problemzone.bashit.modules.kits.KitManager;
 import net.problemzone.lobbibi.modules.events.GameStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ import java.util.Random;
 public class GameListener implements Listener {
 
     private final GameManager gameManager;
+    private final KitManager kitManager;
 
     private int playercount = 0;
 
@@ -33,8 +35,9 @@ public class GameListener implements Listener {
             new Vector( -947.5, 53, -1090.5)
     );
 
-    public GameListener(GameManager gameManager) {
+    public GameListener(GameManager gameManager, KitManager kitManager) {
         this.gameManager = gameManager;
+        this.kitManager = kitManager;
     }
 
     @EventHandler
@@ -62,6 +65,8 @@ public class GameListener implements Listener {
         Random random = new Random();
 
         event.setRespawnLocation(spawnpoints.get(random.nextInt(spawnpoints.size())).toLocation(player.getWorld()));
+        player.getInventory().clear();
+        kitManager.equipPlayer(player);
     }
 
 }

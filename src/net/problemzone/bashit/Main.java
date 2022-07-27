@@ -20,6 +20,8 @@ public final class Main extends JavaPlugin {
     public static final String GAME_WORLD_NAME = "BashIt";
     private static JavaPlugin javaPlugin;
 
+
+
     private final ItemManager itemManager = new ItemManager();
     private final PlayerManager playerManager = new PlayerManager();
     private final ScoreboardManager scoreboardManager = new ScoreboardManager();
@@ -60,12 +62,15 @@ public final class Main extends JavaPlugin {
         //Set Game rules
         World world = getServer().createWorld(new WorldCreator(GAME_WORLD_NAME));
         Objects.requireNonNull(world).setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+        Objects.requireNonNull(world).setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        Objects.requireNonNull(world).setGameRule(GameRule.DO_FIRE_TICK, false);
+        Objects.requireNonNull(world).setGameRule(GameRule.MOB_GRIEFING, false);
 
     }
 
     private void registerListeners() {
         //Event Listeners
-        getServer().getPluginManager().registerEvents(new GameListener(gameManager), this);
+        getServer().getPluginManager().registerEvents(new GameListener(gameManager, kitManager), this);
         getServer().getPluginManager().registerEvents(new WorldProtectionListener(), this);
         getServer().getPluginManager().registerEvents(new ItemListener(itemManager), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
@@ -74,6 +79,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
         getServer().getPluginManager().registerEvents(new ScoreboardListener(scoreboardManager), this);
         getServer().getPluginManager().registerEvents(new KitListener(kitManager), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(scoreboardManager), this);
     }
 
 }

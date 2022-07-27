@@ -9,6 +9,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,6 +122,7 @@ public class Pilot extends Kit {
 
     @Override
     public void equip(Player player){
+
         player.getInventory().addItem(Weapon);
         player.getInventory().addItem(Jetpack);
 
