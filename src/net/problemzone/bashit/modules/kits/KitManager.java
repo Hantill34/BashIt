@@ -4,6 +4,7 @@ import net.problemzone.bashit.modules.kits.Kits.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +16,9 @@ public class KitManager {
 
 
     private final List<Kit> kits = new ArrayList<>();
-    private final Map<Player, Kit> playerKitMap = new HashMap<>();
-
+    public final Map<Player, Kit> playerKitMap = new HashMap<>();
     public static HashMap<UUID, Player> lightnings = new HashMap<UUID, Player>();
-    public static HashMap<Player, Player> target = new HashMap<Player, Player>();
+    public static HashMap <Block, Player> c4 = new HashMap<Block, Player>();
 
 
     public KitManager() {
@@ -27,7 +27,7 @@ public class KitManager {
         kits.add(new Ritter());
         kits.add(new Mage());
         kits.add(new Attentäter());
-        kits.add(new Troll());
+       // kits.add(new Troll());
     }
 
     public void equipPlayer(Player player) {
@@ -64,7 +64,8 @@ public class KitManager {
         inv.setItem(6, kits.get(1).getItem());
         inv.setItem(13, kits.get(2).getItem());
         inv.setItem(20, kits.get(3).getItem());
-        inv.setItem(24, kits.get(4).getItem());
+        //inv.setItem(24, kits.get(4).getItem());
+        inv.setItem(24, new ItemStack(Material.BARRIER));
 
         player.openInventory(inv);
     }
@@ -88,6 +89,10 @@ public class KitManager {
 
     public Kit getKitByPlayer(Player player) {
         return playerKitMap.get(player);
+    }
+
+    public Kit getPlayerByKit(Kit kit){
+        return playerKitMap.get(kit);
     }
 
 }

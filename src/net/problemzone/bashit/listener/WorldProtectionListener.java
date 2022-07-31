@@ -1,8 +1,8 @@
 package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import net.problemzone.bashit.modules.kits.KitManager;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Damageable;
@@ -19,6 +19,8 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class WorldProtectionListener implements Listener {
 
@@ -34,6 +36,7 @@ public class WorldProtectionListener implements Listener {
         e.setCancelled(true);
 
         Block block = e.getBlock();
+        Player p = e.getPlayer();
 
         if (e.getBlock().getType() == Material.FIRE) {
             e.setCancelled(false);
@@ -46,6 +49,40 @@ public class WorldProtectionListener implements Listener {
                     }
                 }
             }, 100);
+        }
+        if (e.getBlockPlaced().getType() == Material.OAK_BUTTON) {
+            e.setCancelled(true);
+            final Location loc = e.getBlockPlaced().getLocation();
+            ItemStack is = new ItemStack(Material.OAK_BUTTON, 1);
+            ItemMeta isMeta = is.getItemMeta();
+            isMeta.setDisplayName("C4 - Typ II");
+            is.setItemMeta(isMeta);
+            p.getInventory().removeItem(is);
+            p.updateInventory();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getJavaPlugin(), new Runnable() {
+
+                @Override
+                public void run() {
+                    if (p.isOnline()) {
+                        if (p.getWorld().getBlockAt(loc).getType() == Material.AIR) {
+                            p.getWorld().getBlockAt(loc).setType(Material.OAK_BUTTON);
+                            for (Player players : Bukkit.getOnlinePlayers()) {
+                                players.playEffect(e.getBlockPlaced().getLocation().add(0.5, 0.5, 0.5), Effect.SMOKE, (float) 0.1);
+                                players.playSound(e.getBlockPlaced().getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                            }
+                            KitManager.c4.put(e.getBlockPlaced(), p);
+                        } else {
+                            ItemStack is = new ItemStack(Material.OAK_BUTTON, 1);
+                            ItemMeta isMeta = is.getItemMeta();
+                            assert isMeta != null;
+                            isMeta.setDisplayName("C4 - Typ II");
+                            is.setItemMeta(isMeta);
+                            p.getInventory().addItem(is);
+                            p.updateInventory();
+                        }
+                    }
+                }
+            }, 1);
         }
     }
 

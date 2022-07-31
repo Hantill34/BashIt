@@ -1,10 +1,12 @@
 package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.Main;
+import net.problemzone.bashit.modules.itemManager.PlayerManager;
 import net.problemzone.bashit.modules.kits.KitManager;
 import net.problemzone.bashit.util.Language;
 import net.problemzone.bashit.util.Sounds;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +17,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -48,6 +51,48 @@ public class PlayerInteractListener implements Listener {
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
 
             if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.CHEST) return;
+
+            if(player.getInventory().getItemInMainHand().getType() == Material.LEVER){
+                event.setCancelled(true);
+                if(player.getInventory().getItemInMainHand().getAmount() == 1){
+                    player.getInventory().setItemInMainHand(null);
+                }else{
+                    player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                }
+                player.updateInventory();
+
+                ArrayList <Block> c4 = new ArrayList<Block>();
+
+                for(Block blocks : KitManager.c4.keySet()){
+                    if(KitManager.c4.get(blocks) == player){
+                        if(blocks.getType() == Material.OAK_BUTTON){
+                            c4.add(blocks);
+                        }
+                    }
+                }
+
+                for(Block blocks : c4){
+                    if(blocks.getType() == Material.OAK_BUTTON){
+                        for(Player players : Bukkit.getOnlinePlayers()){
+                            players.playEffect(blocks.getLocation().add(0.5, 0.5, 0.5), Effect.SMOKE, (float) 0.1);
+                            players.playSound(blocks.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+                        }
+                        for(Player players : Bukkit.getOnlinePlayers()){
+                            if(players.getWorld() == blocks.getWorld()){
+                                if(players.getLocation().distance(blocks.getLocation()) <= 5){
+                                    if(KitManager.c4.get(blocks).isOnline()){
+                                        PlayerManager.target.put(players, KitManager.c4.get(blocks));
+                                    }
+                                }
+                            }
+                        }
+                        ((TNTPrimed) blocks.getWorld().spawn(blocks.getLocation().add(0.5, 0.5, 0.5), TNTPrimed.class)).setFuseTicks(0);
+                        blocks.setType(Material.AIR);
+                    }
+                    KitManager.c4.remove(blocks);
+                }
+            }
+
 
             if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore() != null
                     && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Boom, Boom, Boom, Boom")) {

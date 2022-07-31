@@ -6,8 +6,10 @@ import net.problemzone.bashit.modules.GameManager;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
 import net.problemzone.bashit.modules.itemManager.PlayerManager;
 import net.problemzone.bashit.modules.kits.KitManager;
-import net.problemzone.bashit.scoreboard.ScoreboardListener;
+import net.problemzone.bashit.scoreboard.FinishScoreboard;
+import net.problemzone.bashit.scoreboard.LobbyScoreboard;
 import net.problemzone.bashit.scoreboard.ScoreboardManager;
+import net.problemzone.bashit.scoreboard.TestScoreboardManager;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -23,11 +25,13 @@ public final class Main extends JavaPlugin {
 
 
     private final ItemManager itemManager = new ItemManager();
-    private final PlayerManager playerManager = new PlayerManager();
+     private final FinishScoreboard finishScoreboard = new FinishScoreboard();
+     private final PlayerManager playerManager = new PlayerManager(finishScoreboard);
     private final ScoreboardManager scoreboardManager = new ScoreboardManager();
+    private final TestScoreboardManager testScoreboardManager = new TestScoreboardManager(playerManager);
     public KitManager kitManager = new KitManager();
-    private final GameManager gameManager = new GameManager(itemManager, playerManager, scoreboardManager, kitManager);
-
+    private final LobbyScoreboard lobbyScoreboard = new LobbyScoreboard(kitManager);
+    private final GameManager gameManager = new GameManager(itemManager, playerManager, scoreboardManager, kitManager, testScoreboardManager);
 
 
 
@@ -68,6 +72,8 @@ public final class Main extends JavaPlugin {
 
     }
 
+
+
     private void registerListeners() {
         //Event Listeners
         getServer().getPluginManager().registerEvents(new GameListener(gameManager, kitManager), this);
@@ -75,11 +81,12 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ItemListener(itemManager), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(gameManager), this);
-        getServer().getPluginManager().registerEvents(new DeathListener(playerManager),this);
         getServer().getPluginManager().registerEvents(new EntityShootBowListener(), this);
-        getServer().getPluginManager().registerEvents(new ScoreboardListener(scoreboardManager), this);
-        getServer().getPluginManager().registerEvents(new KitListener(kitManager), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(scoreboardManager), this);
+        getServer().getPluginManager().registerEvents(new KitListener(kitManager, lobbyScoreboard), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(testScoreboardManager, lobbyScoreboard), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(testScoreboardManager, finishScoreboard, playerManager), this);
+        getServer().getPluginManager().registerEvents(new PickupItemListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(playerManager, kitManager, testScoreboardManager, finishScoreboard),this);
     }
 
 }

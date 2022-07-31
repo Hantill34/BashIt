@@ -2,6 +2,8 @@ package net.problemzone.bashit.listener;
 
 import net.problemzone.bashit.modules.kits.Kit;
 import net.problemzone.bashit.modules.kits.KitManager;
+import net.problemzone.bashit.scoreboard.LobbyScoreboard;
+import net.problemzone.bashit.util.Language;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,10 +23,12 @@ public class KitListener implements Listener {
 
 
     private final KitManager kitManager;
+    private final LobbyScoreboard lobbyScoreboard;
     private final String OPERATORSELECTOR = ChatColor.DARK_RED + "Wähle deinen Operator";
 
-    public KitListener(KitManager kitManager) {
+    public KitListener(KitManager kitManager, LobbyScoreboard lobbyScoreboard) {
         this.kitManager = kitManager;
+        this.lobbyScoreboard = lobbyScoreboard;
     }
 
     //Operator Selector Listener
@@ -54,6 +58,8 @@ public class KitListener implements Listener {
                 kitManager.putPlayerInMap(player, kit);
                 event.getView().close();
                 event.setCancelled(true);
+                lobbyScoreboard.updateLobbyScoreboard();
+                player.sendMessage(Language.PREFIX.getText() + ChatColor.GREEN + "Du hast das Kit " + kitManager.getKitByPlayer(player).getName() + ChatColor.GREEN + " ausgewählt.");
             }
         }
     }

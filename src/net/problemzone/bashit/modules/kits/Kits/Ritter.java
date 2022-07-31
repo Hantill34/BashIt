@@ -76,4 +76,9 @@ public class Ritter extends Kit {
         player.getInventory().setBoots(B);
     }
 
+    @Override
+    public void refreshItems(Player p) {
+
+    }
+
 }

@@ -17,7 +17,6 @@ public class Attentäter extends Kit {
         super(ChatColor.RED + "Attentäter", 0, Material.SHEARS);
     }
 
-
     @Override
     public void equip(Player player){
         ItemStack S = new ItemStack(Material.SHEARS, 1);
@@ -49,5 +48,16 @@ public class Attentäter extends Kit {
         player.getInventory().addItem(FPI);
 
         player.getInventory().setChestplate(LC);
+    }
+
+    @Override
+    public void refreshItems(Player p) {
+        ItemStack FPI = new ItemStack(Material.FLOWER_POT, 1);
+        ItemMeta FPIMeta = FPI.getItemMeta();
+        assert FPIMeta != null;
+        FPIMeta.setDisplayName("Nuke");
+        FPI.setItemMeta(FPIMeta);
+
+        p.getInventory().addItem(FPI);
     }
 }

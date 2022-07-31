@@ -35,7 +35,7 @@ public class ScoreboardManager {
         objective.getScore("").setScore(15);
 
         //Countdown
-        objective.getScore(ChatColor.RED + "Mapwechsel:").setScore(14);
+        objective.getScore(ChatColor.RED + "Rundenende:").setScore(14);
 
         Team timeCounter = scoreboard.registerNewTeam(TIME);
         timeCounter.addEntry(ChatColor.RED + " " + ChatColor.WHITE);
@@ -152,7 +152,6 @@ public class ScoreboardManager {
         playerPoints.put(player, 0);
         playerKillStreak.put(player, 0);
     }
-
 
     private String formatTimeSeconds(int seconds) {
         ChatColor color = seconds < 60 ? ChatColor.RED : ChatColor.GOLD;

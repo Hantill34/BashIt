@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.Vector;
 
@@ -69,4 +70,10 @@ public class GameListener implements Listener {
         kitManager.equipPlayer(player);
     }
 
+    @EventHandler
+    public void onPlayerRegeneration(EntityRegainHealthEvent event){
+
+        event.setAmount(event.getAmount()* 0.3);
+
+    }
 }

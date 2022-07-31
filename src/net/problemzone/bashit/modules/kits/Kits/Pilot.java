@@ -4,14 +4,12 @@ import net.problemzone.bashit.modules.kits.Kit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +28,7 @@ public class Pilot extends Kit {
         assert meta != null;
         meta.setDisplayName(ChatColor.AQUA + "Notausgang");
         meta.setUnbreakable(true);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         weapon.setItemMeta(meta);
 
@@ -130,5 +129,10 @@ public class Pilot extends Kit {
         player.getInventory().setChestplate(Plate);
         player.getInventory().setLeggings(Leggins);
         player.getInventory().setBoots(Boots);
+    }
+
+    @Override
+    public void refreshItems(Player p) {
+        p.getInventory().addItem(Jetpack);
     }
 }

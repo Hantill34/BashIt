@@ -4,7 +4,9 @@ import net.problemzone.bashit.Main;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
 import net.problemzone.bashit.modules.itemManager.PlayerManager;
 import net.problemzone.bashit.modules.kits.KitManager;
+import net.problemzone.bashit.scoreboard.FinishScoreboard;
 import net.problemzone.bashit.scoreboard.ScoreboardManager;
+import net.problemzone.bashit.scoreboard.TestScoreboardManager;
 import net.problemzone.bashit.util.Countdown;
 import net.problemzone.bashit.util.Language;
 import net.problemzone.bashit.util.Sounds;
@@ -30,14 +32,16 @@ public class GameManager {
     private final PlayerManager playerManager;
     private final ScoreboardManager scoreboardManager;
     private final KitManager kitManager;
+    private final TestScoreboardManager testScoreboardManager;
 
     private final List<Player> playing = new ArrayList<>();
 
-    public GameManager(ItemManager itemManager, PlayerManager playerManager, ScoreboardManager scoreboardManager, KitManager kitManager) {
+    public GameManager(ItemManager itemManager, PlayerManager playerManager, ScoreboardManager scoreboardManager, KitManager kitManager, TestScoreboardManager testScoreboardManager) {
         this.itemManager = itemManager;
         this.playerManager = playerManager;
         this.scoreboardManager = scoreboardManager;
         this.kitManager = kitManager;
+        this.testScoreboardManager = testScoreboardManager;
     }
 
     public enum GameState {
@@ -68,7 +72,8 @@ public class GameManager {
     }
 
     public void registerPlayer(Player player){
-        scoreboardManager.setGameScoreboard(player);
+       // scoreboardManager.setGameScoreboard(player);
+        testScoreboardManager.setIngameScoreboard(player);
         //kitManager.removeKitSelector(player);
         kitManager.equipPlayer(player);
     }
@@ -100,7 +105,8 @@ public class GameManager {
 
     public void finishGame() {
         gameState = GameState.FINISHED;
-        Bukkit.getOnlinePlayers().forEach(playerManager::wrapUpPlayer);
+        Bukkit.getOnlinePlayers().forEach(playerManager::finishPlayer);
+
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -111,6 +117,7 @@ public class GameManager {
                 Countdown.createXpBarCountdown(FINAL_LOBBY_TIME);
                 Countdown.createLevelCountdown(FINAL_LOBBY_TIME, null);
             }
+
         }.runTaskLater(Main.getJavaPlugin(), 5);
     }
 

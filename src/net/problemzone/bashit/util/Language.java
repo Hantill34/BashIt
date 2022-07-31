@@ -4,42 +4,43 @@ import org.bukkit.ChatColor;
 
 public enum Language {
 
-    PREFIX(ChatColor.LIGHT_PURPLE + "BashIt " + ChatColor.DARK_GRAY + "» "),
+    PREFIX(ChatColor.YELLOW + "Bash" + ChatColor.GOLD + "It" + ChatColor.DARK_GRAY + "» "),
 
 
     JOIN(ChatColor.GREEN + "» " + ChatColor.WHITE + "%s"),
-    JOIN_MESSAGE(ChatColor.GRAY + "Spielmodus " + ChatColor.YELLOW + ChatColor.BOLD + "Bash" +ChatColor.GOLD + "It " + ChatColor.RESET + ChatColor.GRAY + "erfolgreich beigetreten!"),
+    JOIN_MESSAGE(ChatColor.DARK_AQUA + "Spielmodus " + ChatColor.YELLOW + ChatColor.BOLD + "Bash" +ChatColor.GOLD + "It " + ChatColor.RESET + ChatColor.DARK_AQUA + "erfolgreich beigetreten!"),
     QUIT_MESSAGE(ChatColor.RED + "« " + ChatColor.GRAY + "%s"),
-    KIT_MESSAGE(ChatColor.GRAY + "Du hast das Kit " + ChatColor.GOLD + "%s " + ChatColor.GRAY + "ausgewählt!"),
+    KIT_MESSAGE(ChatColor.GREEN + "Du hast das Kit " + "%s " + "ausgewählt."),
 
 
-    FIGHT_START("Kisten spawnen in " + ChatColor.YELLOW + "%d" + ChatColor.GRAY + " Sekunden"),
-    KAMPFPHASE(ChatColor.GRAY + "Kisten sind " + ChatColor.RED + "gespawnt" + ChatColor.GRAY + "."),
+    FIGHT_START(ChatColor.DARK_AQUA + "Kisten spawnen in " + ChatColor.YELLOW + "%d" + ChatColor.DARK_AQUA + " Sekunden"),
+    KAMPFPHASE(ChatColor.GREEN + "Kisten sind gespawnt."),
 
 
 
-    PLAYER_DEATH(ChatColor.GOLD + "%s" + ChatColor.GRAY +  " starb. Wie auch immer..."),
-    PLAYER_DEATH_BY_PLAYER(ChatColor.GOLD + "%s" + ChatColor.GRAY +  " hat " + ChatColor.GOLD + "%s" + ChatColor.GRAY + " die Ehre genommen."),
-    KILLER(ChatColor.GRAY + "Du hast " + ChatColor.GOLD + "%s " + ChatColor.GRAY + "getötet!"),
+    PLAYER_DEATH(ChatColor.YELLOW + "%s" + ChatColor.RED +  " starb. Wie auch immer..."),
+    PLAYER_DEATH_BY_PLAYER(ChatColor.GOLD + "%s" + ChatColor.RED +  " hat " + ChatColor.YELLOW + "%s" + ChatColor.RED + " die Ehre genommen."),
+    KILLER(ChatColor.GREEN + "Du hast " + ChatColor.YELLOW + "%s " + ChatColor.GREEN+ "getötet."),
+    PLAYER_SUICIDE(ChatColor.RED + "Du hast Selbstmord begangen."),
 
 
-    GET_POINTS(ChatColor.GRAY + "Du hast " +ChatColor.GOLD + "+5 Peanuts " + ChatColor.GRAY + "erhalten"),
-    REMOVE_POINTS(ChatColor.GRAY + "Dir wurden " + ChatColor.GOLD + "-2 Peanuts " + ChatColor.GRAY + "abgezogen"),
+    GET_POINTS(ChatColor.GREEN + "Du hast " +ChatColor.YELLOW + "+5 Peanuts " + ChatColor.GREEN + "erhalten"),
+    REMOVE_POINTS(ChatColor.RED + "Dir wurden " + ChatColor.YELLOW + "-2 Peanuts " + ChatColor.RED + "abgezogen"),
 
 
-    GLOBAL_KILLSTREAK(ChatColor.RED + "Der Spieler " + ChatColor.GOLD + "%s" + ChatColor.RED + " hat eine Killstreak von " + ChatColor.GOLD + "%d " + ChatColor.RED + "erreicht!"),
+    GLOBAL_KILLSTREAK(ChatColor.DARK_AQUA + "Der Spieler " + ChatColor.YELLOW + "%s" + ChatColor.DARK_AQUA + " hat eine Killstreak von " + ChatColor.YELLOW + "%d " + ChatColor.RED + "erreicht!"),
 
 
     NO_AMMUNITION(ChatColor.RED +"Du hast keine Munition mehr."),
 
-    ROUND_CHANGE(ChatColor.RED + "Nächste Runde startet in: " + ChatColor.YELLOW + "%d" + ChatColor.RED + " Sekunden"),
-    Round_END("Die Runde endet in: " + ChatColor.YELLOW + "%d" + ChatColor.GRAY + " Sekunden"),
+    ROUND_CHANGE(ChatColor.RED + "Der Server schließt in: " + ChatColor.YELLOW + "%d" + ChatColor.RED + " Sekunden"),
+    Round_END(ChatColor.DARK_AQUA + "Die Runde endet in: " + ChatColor.YELLOW + "%d" + ChatColor.DARK_AQUA + " Sekunden"),
 
 
 
 
 
-    WINNER_TITLE(ChatColor.GOLD + "%s " + ChatColor.GRAY + "hat das Spiel gewonnen!"),
+    WINNER_TITLE(ChatColor.YELLOW + "%s " + ChatColor.DARK_AQUA + "hat das Spiel gewonnen!"),
 
 
     ;

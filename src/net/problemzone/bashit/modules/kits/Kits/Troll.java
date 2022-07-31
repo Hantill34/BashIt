@@ -73,4 +73,9 @@ public class Troll extends Kit {
         player.getInventory().setLeggings(IL);
         player.getInventory().setBoots(IB);
     }
+
+    @Override
+    public void refreshItems(Player p) {
+
+    }
 }

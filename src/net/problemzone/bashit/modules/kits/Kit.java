@@ -40,10 +40,7 @@ public abstract class Kit implements Listener {
         return it;
     }
 
-    public void equip(Player p)
-    {
+    public abstract void equip(Player p);
 
-    }
-
-
+    public abstract void refreshItems(Player p);
 }
