@@ -4,7 +4,6 @@ import net.problemzone.bashit.Main;
 import net.problemzone.bashit.modules.itemManager.ItemManager;
 import net.problemzone.bashit.modules.itemManager.PlayerManager;
 import net.problemzone.bashit.modules.kits.KitManager;
-import net.problemzone.bashit.scoreboard.FinishScoreboard;
 import net.problemzone.bashit.scoreboard.ScoreboardManager;
 import net.problemzone.bashit.scoreboard.TestScoreboardManager;
 import net.problemzone.bashit.util.Countdown;
@@ -23,8 +22,8 @@ public class GameManager {
 
     private final static int MAX_PLAYERS = 2;
 
-    public final static int START_TIME = 20;
-    public final static int FIGHT_TIME = 360;
+    public final static int START_TIME = 10; //20
+    public final static int FIGHT_TIME = 360; //360
     public final static int FINAL_LOBBY_TIME = 20;
 
     private static GameState gameState = GameState.WRAPPING_UP;
@@ -111,11 +110,7 @@ public class GameManager {
             @Override
             public void run() {
                 Bukkit.getPluginManager().callEvent(new GameFinishEvent());
-                Bukkit.getOnlinePlayers().forEach(player -> player.teleport(Objects.requireNonNull(Bukkit.getWorld("Lobby")).getSpawnLocation()));
                 Bukkit.getOnlinePlayers().forEach(Sounds.GAME_WIN::playSoundForPlayer);
-                Countdown.createChatCountdown(FINAL_LOBBY_TIME, Language.ROUND_CHANGE);
-                Countdown.createXpBarCountdown(FINAL_LOBBY_TIME);
-                Countdown.createLevelCountdown(FINAL_LOBBY_TIME, null);
             }
 
         }.runTaskLater(Main.getJavaPlugin(), 5);

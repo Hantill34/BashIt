@@ -19,7 +19,7 @@ public class Pilot extends Kit {
 
 
     public Pilot() {
-        super(ChatColor.AQUA + "Pilot", 0, Material.FEATHER);
+        super(ChatColor.AQUA + "Pilot", 0, Material.FIREWORK_ROCKET);
     }
 
     public static ItemStack createWeapon(){
@@ -28,7 +28,7 @@ public class Pilot extends Kit {
         assert meta != null;
         meta.setDisplayName(ChatColor.AQUA + "Notausgang");
         meta.setUnbreakable(true);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, false);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 3, false);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         weapon.setItemMeta(meta);
 
@@ -36,7 +36,7 @@ public class Pilot extends Kit {
     }
 
     public static ItemStack createJetpack(){
-        ItemStack jet = new ItemStack(Material.FIREWORK_ROCKET, 2);
+        ItemStack jet = new ItemStack(Material.FIREWORK_ROCKET, 4);
         ItemMeta jetItemMeta = jet.getItemMeta();
         assert jetItemMeta != null;
         jetItemMeta.setDisplayName(ChatColor.AQUA + "Jetpack");
@@ -124,6 +124,7 @@ public class Pilot extends Kit {
 
         player.getInventory().addItem(Weapon);
         player.getInventory().addItem(Jetpack);
+        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
 
         player.getInventory().setHelmet(Helm);
         player.getInventory().setChestplate(Plate);
@@ -134,5 +135,6 @@ public class Pilot extends Kit {
     @Override
     public void refreshItems(Player p) {
         p.getInventory().addItem(Jetpack);
+        p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
     }
 }

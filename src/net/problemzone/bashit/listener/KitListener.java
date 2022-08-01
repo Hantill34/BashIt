@@ -6,6 +6,7 @@ import net.problemzone.bashit.scoreboard.LobbyScoreboard;
 import net.problemzone.bashit.util.Language;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,6 +61,7 @@ public class KitListener implements Listener {
                 event.setCancelled(true);
                 lobbyScoreboard.updateLobbyScoreboard();
                 player.sendMessage(Language.PREFIX.getText() + ChatColor.GREEN + "Du hast das Kit " + kitManager.getKitByPlayer(player).getName() + ChatColor.GREEN + " ausgewählt.");
+                player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 4, 1);
             }
         }
     }
@@ -69,7 +71,7 @@ public class KitListener implements Listener {
         if(event.getItem() == null) return;
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
             if(Objects.requireNonNull(event.getItem().getItemMeta()).getDisplayName().equals(ChatColor.AQUA + "Jetpack")){
-                event.getPlayer().setVelocity(new Vector(0, 1, 0));
+                event.getPlayer().setVelocity(new Vector(0, 1.5, 0));
                 event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 3 * 20, 0, false, false, false));
                 event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
             }

@@ -82,7 +82,7 @@ public class PlayerDeathListener implements Listener {
 
 //TODO: Give players Kit-specific Items after they achieved a kill
 
-                kitManager.getKitByPlayer(player).refreshItems(player);
+                kitManager.getKitByPlayer(killer).refreshItems(killer);
 
                 final int points = (int) Math.round((double) PlayerManager.points.get(player) / (double) 40);
 
@@ -151,7 +151,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
                 }
                 if (PlayerManager.kills.get(killer) == 10) {
                     killer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 1));
@@ -168,7 +168,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
                 }
                 if (PlayerManager.kills.get(killer) == 15) {
                     killer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 600, 0));
@@ -184,7 +184,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
                 }
                 if (PlayerManager.kills.get(killer) == 20) {
                     killer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 600, 1));
@@ -200,7 +200,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + killer.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(killer) + ChatColor.DARK_AQUA + "er Killstreak.");
                 }
 
 //TODO: Bonuscoins
@@ -255,7 +255,7 @@ public class PlayerDeathListener implements Listener {
 
 //TODO: Add K2 Kit-Specific Items
 
-                kitManager.getKitByPlayer(player).refreshItems(player);
+                kitManager.getKitByPlayer(k2).refreshItems(k2);
 
                 final int points = (int) Math.round((double) PlayerManager.points.get(player) / (double) 40);
 
@@ -324,7 +324,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.DARK_AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.DARK_AQUA + "er Killstreak.");
                 }
                 if (PlayerManager.kills.get(k2) == 10) {
                     k2.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 1));
@@ -341,7 +341,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.DARK_AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.DARK_AQUA + "er Killstreak.");
                 }
                 if (PlayerManager.kills.get(k2) == 15) {
                     k2.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 600, 0));
@@ -357,7 +357,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.AQUA + "er Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.AQUA + "er Killstreak.");
                 }
                 if (PlayerManager.kills.get(k2) == 20) {
                     k2.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 600, 1));
@@ -373,7 +373,7 @@ public class PlayerDeathListener implements Listener {
                     fwmeta.addEffects(fwbuilder.build());
                     fwmeta.setPower(1);
                     fw.setFireworkMeta(fwmeta);
-                    Bukkit.broadcastMessage(Language.PREFIX.getText() + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.DARK_AQUA + "er §3Killstreak.");
+                    Bukkit.broadcastMessage(Language.PREFIX.getText() + ChatColor.YELLOW + k2.getDisplayName() + ChatColor.DARK_AQUA + " hat eine " + ChatColor.YELLOW + PlayerManager.kills.get(k2) + ChatColor.DARK_AQUA + "er §3Killstreak.");
                 }
 
 //TODO: Add Bonus Coins

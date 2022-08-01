@@ -28,7 +28,7 @@ public class Mage extends Kit {
         ItemStack FSE = new ItemStack(Material.FERMENTED_SPIDER_EYE, 4);
         ItemStack BP = new ItemStack(Material.BLAZE_POWDER, 4);
         ItemStack P1 = new ItemStack(Material.SPLASH_POTION, 1);
-        ItemStack P2 = new ItemStack(Material.SPLASH_POTION, 4);
+        ItemStack P2 = new ItemStack(Material.SPLASH_POTION, 2);
 
         ArrayList<String> Lore = new ArrayList<String>();
 
@@ -39,7 +39,7 @@ public class Mage extends Kit {
         ItemMeta Kmeta = K.getItemMeta();
         assert Kmeta != null;
         Kmeta.setDisplayName(ChatColor.YELLOW + "Knüppel");
-        Kmeta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+        Kmeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
         K.setItemMeta(Kmeta);
 
         ItemMeta BRMeta = BR.getItemMeta();
@@ -55,7 +55,7 @@ public class Mage extends Kit {
         P1.setItemMeta(P1meta);
         PotionMeta P2meta = (PotionMeta) P2.getItemMeta();
         assert P2meta != null;
-        P2meta.setBasePotionData(new PotionData(PotionType.INSTANT_DAMAGE, false, true));
+        P2meta.setBasePotionData(new PotionData(PotionType.INSTANT_DAMAGE));
         P2.setItemMeta(P2meta);
 
         ItemMeta FSEmeta = FSE.getItemMeta();
@@ -115,17 +115,6 @@ public class Mage extends Kit {
     public void refreshItems(Player p) {
         ItemStack FSE = new ItemStack(Material.FERMENTED_SPIDER_EYE, 1);
         ItemStack BP = new ItemStack(Material.BLAZE_POWDER, 1);
-        ItemStack P1 = new ItemStack(Material.SPLASH_POTION, 1);
-        ItemStack P2 = new ItemStack(Material.SPLASH_POTION, 1);
-
-        PotionMeta P1meta = (PotionMeta) P1.getItemMeta();
-        assert P1meta != null;
-        P1meta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
-        P1.setItemMeta(P1meta);
-        PotionMeta P2meta = (PotionMeta) P2.getItemMeta();
-        assert P2meta != null;
-        P2meta.setBasePotionData(new PotionData(PotionType.INSTANT_DAMAGE, false, true));
-        P2.setItemMeta(P2meta);
 
         ItemMeta FSEmeta = FSE.getItemMeta();
         assert FSEmeta != null;
@@ -139,8 +128,6 @@ public class Mage extends Kit {
 
         p.getInventory().addItem(FSE);
         p.getInventory().addItem(BP);
-        p.getInventory().addItem(P1);
-        p.getInventory().addItem(P2);
     }
 
 }
